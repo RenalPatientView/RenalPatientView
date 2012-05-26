@@ -1,0 +1,8 @@
+build/
+classes/
+webapp/META-INF/
+webapp/WEB-INF/classes/com/
+webapp/WEB-INF/classes/hibernate.cfg.xml
+webapp/WEB-INF/config/SystemGlobals.properties
+webapp/WEB-INF/config/database/mysql/mysql.properties
+webapp/WEB-INF/log4j.xml
