@@ -2,11 +2,11 @@ package com.worthsoln.patientview.notification;
 
 import com.worthsoln.HibernateUtil;
 import com.worthsoln.patientview.notification.Notification;
-import net.sf.hibernate.Hibernate;
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
-import net.sf.hibernate.Transaction;
-import net.sf.hibernate.type.Type;
+import com.worthsoln.patientview.TestResult;
+import com.worthsoln.patientview.User;
+import com.worthsoln.patientview.logon.UserMapping;
+import net.sf.hibernate.*;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletConfig;
@@ -15,14 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class NotificationPollerServlet extends HttpServlet
 {
-    private static final Logger LOGGER = Logger.getLogger(NotificationPollerServlet.class);
     private static final String PERIOD_PARAMETER = "periodMinutes";
     private final Timer timer = new Timer();
 
@@ -59,11 +55,12 @@ public class NotificationPollerServlet extends HttpServlet
         public void run()
         {
             List notifications;
-            // Now some awful error handling :s
+            // TODO Fix awful error handling :s
+            // TODO The transaction semantics are wrong; we should do everything in one transaction to avoid missing things
             try {
                 Session session = HibernateUtil.currentSession();
                 Transaction tx = session.beginTransaction();
-                notifications = session.find("from " + Notification.class.getName());
+                notifications = session.find("from " + Notification.class.getName()); // TODO Filter by name
                 tx.commit();
                 HibernateUtil.closeSession();
             } catch (HibernateException e) {
@@ -79,8 +76,19 @@ public class NotificationPollerServlet extends HttpServlet
             }
             System.out.println("Last notification: " + notification.getLastnotification());
 
-            //TODO Do stuff
+            // Do stuff
 
+            // TODO This should really be some nice HQL but that's a pain to write and debug in current setup
+            List<TestResult> newTestResults = loadResultsNewerThan(notification.getLastnotification());
+            if (!newTestResults.isEmpty()) {
+                System.out.println("!Got new test results!");
+                Set<User> usersToBeNotified = usersFromResults(newTestResults);
+                notifyUsersOfResults(usersToBeNotified);
+            } else {
+                System.out.println("Got no new test results");
+            }
+
+            // Done stuff
 
             notification.setLastnotification(new Date());
             System.out.println("Notification now: " + notification.getLastnotification());
@@ -94,6 +102,88 @@ public class NotificationPollerServlet extends HttpServlet
                 System.out.println("Error persisting notification: " + e);
                 return;
             }
+        }
+
+        private List<TestResult> loadResultsNewerThan(Date threshold) {
+            List<TestResult> results;
+            System.out.println("Getting results newer than " + threshold);
+            try {
+                Session session = HibernateUtil.currentSession();
+                Transaction tx = session.beginTransaction();
+                Query query = session.createQuery("from " + TestResult.class.getName() + " as testresult where testresult.datestamp > :threshold"); //TODO Confirm > not >=
+                query.setTimestamp("threshold", threshold);
+                results = query.list();
+                tx.commit();
+                HibernateUtil.closeSession();
+            } catch (HibernateException e) {
+                System.out.println("Error getting test results: " + e);
+                return null;
+            }
+
+            return results;
+        }
+
+        private void notifyUsersOfResults(Set<User> usersToBeNotified) {
+            System.out.println("Notifying users of results: " + usersToBeNotified);
+            for (User user : usersToBeNotified) {
+                System.out.println("Notifying user: " + user.getEmail());
+            }
+            System.out.println("Notified users of results: " + usersToBeNotified);
+        }
+
+        private Set<User> usersFromResults(List<TestResult> results) {
+            //TODO Express this more concisely with HQL
+            List<UserMapping> userMappings = userMappingsFromResults(results);
+            List<User> users = usersFromUserMappings(userMappings);
+
+            return new HashSet<User>(users);
+        }
+
+        private List<UserMapping> userMappingsFromResults(List<TestResult> results) {
+            // "Optimisation"
+            Set<String> nhsNumberSet = new HashSet<String>();
+            for (TestResult result : results) {
+                nhsNumberSet.add(result.getNhsno());
+            }
+
+            List<UserMapping> userMappings;
+            try {
+                Session session = HibernateUtil.currentSession();
+                Transaction tx = session.beginTransaction();
+                Query query = session.createQuery("from " + UserMapping.class.getName() + " as usermapping where usermapping.nhsno in (:nhsnumbers) and usermapping.unitcode == 'PATIENT'");
+                query.setParameterList("nhsnumbers", new ArrayList(nhsNumberSet));
+                userMappings = query.list();
+                tx.commit();
+                HibernateUtil.closeSession();
+            } catch (HibernateException e) {
+                System.out.println("Error getting user mappings: " + e);
+                return null;
+            }
+
+            return userMappings;
+        }
+
+        private List<User> usersFromUserMappings(List<UserMapping> userMappings) {
+            Set<String> usernameSet = new HashSet<String>();
+            for (UserMapping userMapping : userMappings) {
+                usernameSet.add(userMapping.getUsername());
+            }
+
+            List<User> users;
+            try {
+                Session session = HibernateUtil.currentSession();
+                Transaction tx = session.beginTransaction();
+                Query query = session.createQuery("from " + User.class.getName() + " as user where user.username in (:usernames)");
+                query.setParameterList("usernames", new ArrayList(usernameSet));
+                users = query.list();
+                tx.commit();
+                HibernateUtil.closeSession();
+            } catch (HibernateException e) {
+                System.out.println("Error getting user mappings: " + e);
+                return null;
+            }
+
+            return users;
         }
     }
 }
