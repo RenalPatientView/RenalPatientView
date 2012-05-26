@@ -23,7 +23,6 @@
     <mapping resource="com/worthsoln/patientview/LogEntry.hbm.xml"/>
     <mapping resource="com/worthsoln/patientview/Medicine.hbm.xml"/>
     <mapping resource="com/worthsoln/patientview/News.hbm.xml"/>
-    <mapping resource="com/worthsoln/patientview/Notification.hbm.xml"/>
     <mapping resource="com/worthsoln/patientview/Patient.hbm.xml"/>
     <mapping resource="com/worthsoln/patientview/PatientCount.hbm.xml"/>
     <mapping resource="com/worthsoln/patientview/ResultHeading.hbm.xml"/>
