@@ -50,7 +50,7 @@
     <servlet-class>com.worthsoln.patientview.notification.NotificationPollerServlet</servlet-class>
     <init-param>
       <param-name>periodMinutes</param-name>
-      <param-value>5</param-value>
+      <param-value>1</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
