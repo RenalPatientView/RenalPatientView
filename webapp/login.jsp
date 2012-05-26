@@ -6,4 +6,6 @@
 
     <tiles:put name="body" value="/body/login.jsp" />
 
+    <tiles:put name="top_nav" value="/common/top_nav_not_signed_in.jsp" />
+
 </tiles:insert>
