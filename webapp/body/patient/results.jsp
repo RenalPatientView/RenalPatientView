@@ -4,6 +4,32 @@
 
 <html:xhtml/>
 
+<div>
+    <div id="k-plot" style="width:345px; height:180px; float: left;">
+        <h2 class="plot-placeholder">Loading...</h2>
+    </div>
+    <div id="po-plot" style="width:345px; height:180px; float: left;">
+        <h2 class="plot-placeholder">Loading...</h2>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".plot-placeholder").remove();
+        var k_data = [{data: [[1336831200000.0, 1237], [1336831200000.0, 1237]]}];
+        var po_data = [{data: [[1336831200000.0, 1237], [1336831200000.0, 1237]]}];
+        var options = {
+            xaxis: {mode: "time"},
+            legend: {show: false},
+            series: {
+                lines: {show: true},
+                points: {show: true}
+            }
+        };
+        $.plot($("#k-plot"), k_data, options);
+        $.plot($("#po-plot"), po_data, options);
+    });
+</script>
+
 <table width="690" border="0" cellspacing="1" cellpadding="3">
       <tr valign="top">
         <td colspan="12" align="left">
