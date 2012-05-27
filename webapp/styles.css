@@ -232,7 +232,7 @@ font-size:12px; font-style:normal; font-weight:normal; width:500px; text-align:l
 
 .navcell-empty{
 	font-family:Verdana, Arial, Helvetica;
-	font-size:12px; font-style:normal; font-weight:bold; color:#000000; background-color: #8BC3F7; border-bottom-width: 1; border-right-width: 0; border-color: #CFE6FC #ffffff #59A3E1 #ffffff; border-style: solid; border-left-width: 0; border-top-width: 6; height:25px; width:10px;
+	font-size:12px; font-style:normal; font-weight:bold; color:#000000; background-color: #49A9C6; border-bottom-width: 1; border-right-width: 0; border-color: #CFE6FC #ffffff #59A3E1 #ffffff; border-style: solid; border-left-width: 0; border-top-width: 6; height:25px; width:10px;
 }
 
 
@@ -241,25 +241,25 @@ font-size:12px; font-style:normal; font-weight:normal; width:500px; text-align:l
 
 .navcell-right{
 	font-family:Verdana, Arial, Helvetica;
-	font-size:12px; font-style:normal; font-weight:bold; color:#000000; background-color: #8BC3F7; border-bottom-width: 1; border-right-width: 0; border-color: #CFE6FC #ffffff #59A3E1 #ffffff; border-style: solid; border-left-width: 0; border-top-width: 6; height:25px; text-align:center; white-space:nowrap
+	font-size:12px; font-style:normal; font-weight:bold; color:#000000; background-color: #49A9C6; border-bottom-width: 1; border-right-width: 0; border-color: #CFE6FC #ffffff #59A3E1 #ffffff; border-style: solid; border-left-width: 0; border-top-width: 6; height:25px; text-align:center; white-space:nowrap
 }
 
 
 .navcell{
 	font-family:Verdana, Arial, Helvetica;
-	font-size:12px; font-style:normal; font-weight:bold; color:#000000; background-color: #8BC3F7; border-bottom-width: 1; border-right-width: 1; border-color: #CFE6FC #ffffff #59A3E1 #ffffff; border-style: solid; border-left-width: 0; border-top-width: 6; height:25px; text-align:center; white-space:nowrap
+	font-size:12px; font-style:normal; font-weight:bold; color:#000000; background-color: #49A9C6; border-bottom-width: 1; border-right-width: 1; border-color: #CFE6FC #ffffff #59A3E1 #ffffff; border-style: solid; border-left-width: 0; border-top-width: 6; height:25px; text-align:center; white-space:nowrap
 }
 
 
 a.navlink{
 	font-family:Verdana, Arial, Helvetica;
-	font-size:12px; font-style:normal; font-weight:bold; color:#000000; text-decoration:none; background-color: #8BC3F7; height:30px; padding:6px; border-top-width: 1; border-left-width: 0;  border-right-width: 0;  border-bottom-width: 0;  border-style: solid; border-color: #59A3E1;
+	font-size:12px; font-style:normal; font-weight:bold; color:#000000; text-decoration:none; background-color: #49A9C6; height:30px; padding:6px; border-top-width: 1; border-left-width: 0;  border-right-width: 0;  border-bottom-width: 0;  border-style: solid; border-color: #59A3E1;
 }
 
 
 .navlink{
 	font-family:Verdana, Arial, Helvetica;
-	font-size:12px; font-style:normal; font-weight:bold; color:#000000; text-decoration:none; background-color: #8BC3F7; height:30px; padding:6px; border-top-width: 1; border-left-width: 0;  border-right-width: 0;  border-bottom-width: 0;  border-style: solid; border-color: #59A3E1;
+	font-size:12px; font-style:normal; font-weight:bold; color:#000000; text-decoration:none; background-color: #49A9C6; height:30px; padding:6px; border-top-width: 1; border-left-width: 0;  border-right-width: 0;  border-bottom-width: 0;  border-style: solid; border-color: #59A3E1;
 }
 
 
@@ -277,7 +277,7 @@ a.navlink:visited{
 
 a.navlink:hover{
 	font-family:Verdana, Arial, Helvetica;
-	font-size:12px; font-style:normal; font-weight:bold; color:#000000; text-decoration:none; background-color: #ECF1FB; height:30px; padding:6px; border-top-width: 1; border-left-width: 0;  border-right-width: 0;  border-bottom-width: 0;  border-style: solid; border-color: #59A3E1;
+	font-size:12px; font-style:normal; font-weight:bold; color:#000000; text-decoration:none; background-color: #FDD34D; height:30px; padding:6px; border-top-width: 1; border-left-width: 0;  border-right-width: 0;  border-bottom-width: 0;  border-style: solid; border-color: #59A3E1;
 }
 
 
