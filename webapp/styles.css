@@ -266,12 +266,12 @@ a.navlink{
 
 a.navlink:active{
 	font-family:Verdana, Arial, Helvetica;
-	font-size:12px; font-style:normal; font-weight:bold; color:#000000; text-decoration:none; background-color: #8BC3F7; height:30px; padding:6px; border-top-width: 1; border-left-width: 0;  border-right-width: 0;  border-bottom-width: 0;  border-style: solid; border-color: #59A3E1;
+	font-size:12px; font-style:normal; font-weight:bold; color:#000000; text-decoration:none; background-color: #49A9C6; height:30px; padding:6px; border-top-width: 1; border-left-width: 0;  border-right-width: 0;  border-bottom-width: 0;  border-style: solid; border-color: #59A3E1;
 }
 
 a.navlink:visited{
 	font-family:Verdana, Arial, Helvetica;
-	font-size:12px; font-style:normal; font-weight:bold; color:#000000; text-decoration:none; background-color: #8BC3F7; height:30px; padding:6px; border-top-width: 1; border-left-width: 0;  border-right-width: 0;  border-bottom-width: 0;  border-style: solid; border-color: #59A3E1;
+	font-size:12px; font-style:normal; font-weight:bold; color:#000000; text-decoration:none; background-color: #49A9C6; height:30px; padding:6px; border-top-width: 1; border-left-width: 0;  border-right-width: 0;  border-bottom-width: 0;  border-style: solid; border-color: #59A3E1;
 }
 
 
