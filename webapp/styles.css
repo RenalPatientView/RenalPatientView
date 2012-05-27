@@ -447,6 +447,15 @@ a.paginate{
     background-color: #49A9C6;
     color: white;
 }
+
+#left_login a {
+    color: white;
+}
+
+#left_login a:hover {
+    color: black;
+}
+
 #left_login input[type="submit"] {
     /* Nastily cribbed from Bootstrap for demo porpoises */
     background-color:
