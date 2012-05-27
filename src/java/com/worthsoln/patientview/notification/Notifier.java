@@ -1,6 +1,8 @@
 package com.worthsoln.patientview.notification;
 
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.worthsoln.HibernateUtil;
+import com.worthsoln.patientview.EmailUtils;
 import com.worthsoln.patientview.TestResult;
 import com.worthsoln.patientview.User;
 import com.worthsoln.patientview.logon.UserMapping;
@@ -8,6 +10,9 @@ import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Query;
 import net.sf.hibernate.Session;
 import net.sf.hibernate.Transaction;
+
+import javax.servlet.ServletContext;
+
 
 import java.util.*;
 
@@ -19,8 +24,14 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Notifier {
-    public Notifier()
+
+    private static final String FROM = "renalpatientview@doismellburning.co.uk";
+    private static final String BODY = "Please log into http://www.renalpatientview.org/ to view your test results.";
+    private static final String SUBJECT = "You have new test results available on Renal PatientView";
+    private ServletContext servletContext;
+    public Notifier(ServletContext servletContext)
     {
+        this.servletContext = servletContext;
     }
 
     public void notifyTestResults(Collection testResults)
@@ -30,7 +41,7 @@ public class Notifier {
         if (usersToNotify.isEmpty()) {
             System.out.println("No users to be notified for the new test results");
         } else {
-            notifyUsersOfResults(new HashSet(usersToNotify));            
+            notifyUsersOfResults(new HashSet(usersToNotify));
         }
     }
 
@@ -86,6 +97,7 @@ public class Notifier {
         System.out.println("Notifying users of results: " + usersToBeNotified);
         for (User user : usersToBeNotified) {
             System.out.println("Notifying user: " + user.getEmail());
+            EmailUtils.sendEmail(servletContext, FROM, user.getEmail(), SUBJECT, BODY);
         }
         System.out.println("Notified users of results: " + usersToBeNotified);
     }

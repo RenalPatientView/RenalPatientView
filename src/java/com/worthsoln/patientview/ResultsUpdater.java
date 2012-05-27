@@ -30,8 +30,9 @@ public class ResultsUpdater {
 
     public void update(ServletContext context, File xmlFile) {
 
+        ResultParser parser = new ResultParser();
+        boolean updatedData = false;
         try {
-            ResultParser parser = new ResultParser();
             parser.parseResults(context, xmlFile);
 
             if ("Remove".equalsIgnoreCase(parser.getFlag()) || "Dead".equalsIgnoreCase(parser.getFlag()) ||
@@ -41,7 +42,7 @@ public class ResultsUpdater {
                         parser.getPatient().getCentreCode(), xmlFile.getName());
             } else {
                 updatePatientData(parser);
-                doNotification(parser);
+                updatedData = true;
                 AddLog.addLog(AddLog.ACTOR_SYSTEM, AddLog.PATIENT_DATA_FOLLOWUP, "", parser.getPatient().getNhsno(),
                         parser.getPatient().getCentreCode(), xmlFile.getName());
             }
@@ -53,8 +54,13 @@ public class ResultsUpdater {
                     xmlFile.getName() + " : " +XmlImportUtils.extractStringFromStackTrace(e));
             XmlImportUtils.sendEmailOfExpectionStackTraceToUnitAdmin(e, xmlFile, context);
         }
+
         String directory = context.getInitParameter("xml.patient.data.load.directory");
         xmlFile.renameTo(new File(directory, xmlFile.getName()));
+
+        if (updatedData) {
+            doNotification(context, parser);
+        }
     }
 
     private void removePatientFromSystem(ResultParser parser) {
@@ -76,10 +82,10 @@ public class ResultsUpdater {
         insertMedicines(parser.getMedicines());
     }
 
-    private void doNotification(ResultParser parser)
+    private void doNotification(ServletContext context, ResultParser parser)
     {
-        Notifier notifier = new Notifier();
-        notifier.notifyTestResults(parser.getTestResults());        
+        Notifier notifier = new Notifier(context);
+        notifier.notifyTestResults(parser.getTestResults());
     }
 
     private void updatePatientDetails(Patient patient) {
