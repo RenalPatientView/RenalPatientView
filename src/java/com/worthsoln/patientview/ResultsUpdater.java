@@ -7,6 +7,7 @@ import com.worthsoln.patientview.diagnosis.Diagnosis;
 import com.worthsoln.patientview.letter.Letter;
 import com.worthsoln.patientview.logging.AddLog;
 import com.worthsoln.patientview.medicine.Medicine;
+import com.worthsoln.patientview.notification.Notifier;
 import com.worthsoln.patientview.parser.ResultParser;
 import com.worthsoln.patientview.user.UserUtils;
 import com.worthsoln.patientview.utils.TimestampUtils;
@@ -40,6 +41,7 @@ public class ResultsUpdater {
                         parser.getPatient().getCentreCode(), xmlFile.getName());
             } else {
                 updatePatientData(parser);
+                doNotification(parser);
                 AddLog.addLog(AddLog.ACTOR_SYSTEM, AddLog.PATIENT_DATA_FOLLOWUP, "", parser.getPatient().getNhsno(),
                         parser.getPatient().getCentreCode(), xmlFile.getName());
             }
@@ -72,6 +74,12 @@ public class ResultsUpdater {
         insertOtherDiagnoses(parser.getOtherDiagnoses());
         deleteMedicines(parser.getData("nhsno"), parser.getData("centrecode"));
         insertMedicines(parser.getMedicines());
+    }
+
+    private void doNotification(ResultParser parser)
+    {
+        Notifier notifier = new Notifier();
+        notifier.notifyTestResults(parser.getTestResults());        
     }
 
     private void updatePatientDetails(Patient patient) {

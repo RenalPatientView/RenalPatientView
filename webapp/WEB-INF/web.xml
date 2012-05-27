@@ -45,7 +45,7 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
-  <servlet>
+<!--  <servlet>
     <servlet-name>notificationPollerServlet</servlet-name>
     <servlet-class>com.worthsoln.patientview.notification.NotificationPollerServlet</servlet-class>
     <init-param>
@@ -53,7 +53,7 @@
       <param-value>1</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
-  </servlet>
+  </servlet>-->
   <servlet>
     <servlet-name>xmlParser</servlet-name>
     <servlet-class>com.worthsoln.patientview.ParserMonitorServlet</servlet-class>
